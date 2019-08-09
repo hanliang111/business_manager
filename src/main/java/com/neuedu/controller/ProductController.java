@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,14 +32,14 @@ public class ProductController {
         List<Category> categoryList=productService.findId();
         session.setAttribute("productlist", productList);
         session.setAttribute("categoryList",categoryList);
-        return "productlist";
+        return "/product/productlist";
     }
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.GET)
     public String update(@PathVariable("id") Integer productId, HttpServletRequest request) {
         Product product = productService.findProductById(productId);
         request.setAttribute("product", product);
-        return "productupdate";
+        return "/product/productupdate";
     }
 
     @RequestMapping(value = "update/{id}", method = RequestMethod.POST)
@@ -49,7 +50,7 @@ public class ProductController {
         if (count > 0) {
             return "redirect:/user/product/find";
         }
-        return "productupdate";
+        return "/product/productupdate";
     }
 
     @RequestMapping(value = "delete/{id}", method = RequestMethod.GET)
@@ -59,17 +60,21 @@ public class ProductController {
     }
     @RequestMapping(value = "insert",method = RequestMethod.GET)
     public String insert(){
-        return "productinsert";
+        return "/product/productinsert";
     }
     @RequestMapping(value = "insert",method = RequestMethod.POST)
-    public String insert(HttpServletRequest request,HttpServletResponse response,Product product) throws UnsupportedEncodingException{
+    public String insert(HttpServletRequest request, HttpServletResponse response,
+                         Product product)
+            throws UnsupportedEncodingException{
+
+
         request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
         int count=productService.addProduct(product);
         if (count>0){
             return "redirect:/user/product/find";
         }
-        return "productinsert";
+        return "/product/productinsert";
 
     }
 }

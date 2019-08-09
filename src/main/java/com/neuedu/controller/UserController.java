@@ -43,21 +43,21 @@ public class UserController {
             response.addCookie(username_cookie);
             response.addCookie(password_cookie);
             session.setAttribute(Consts.CURRENT_USER,loginUserInfo);
-            return "redirect:find";
+            return "redirect:home";
         }
         return "login";
     }
 
     @RequestMapping(value = "home")
     public String home(){
-        return "home";
+        return "/home/home";
     }
 
     @RequestMapping(value = "find")
     public String findAll(HttpSession session){
         List<UserInfo> userInfoList=userService.findAll();
         session.setAttribute("userInfoList",userInfoList);
-        return "homelist";
+        return "/user/homelist";
     }
     @RequestMapping(value = "delete/{id}",method = RequestMethod.GET)
     public String delete(@PathVariable("id") Integer userid){
@@ -68,7 +68,7 @@ public class UserController {
     public String update(@PathVariable("id") Integer userId, HttpServletRequest request){
         UserInfo userInfo =userService.findUserById(userId);
         request.setAttribute("userInfo",userInfo);
-        return "homeupdate";
+        return "/user/homeupdate";
     }
     @RequestMapping(value = "update/{id}",method = RequestMethod.POST)
     public String update(UserInfo userInfo,HttpServletRequest request,HttpServletResponse response)throws UnsupportedEncodingException{
@@ -78,11 +78,11 @@ public class UserController {
         if(count>0){
             return "redirect:/user/find";
         }
-        return "homeupdate";
+        return "/user/homeupdate";
     }
     @RequestMapping(value = "insert",method = RequestMethod.GET)
     public String insert(){
-        return "homeinsert";
+        return "/user/homeinsert";
     }
     @RequestMapping(value = "insert",method = RequestMethod.POST)
     public String insert(UserInfo userInfo,HttpServletResponse response,HttpServletRequest request)throws UnsupportedEncodingException{
@@ -92,6 +92,6 @@ public class UserController {
         if(count>0){
             return "redirect:/user/find";
         }
-        return "homeinsert";
+        return "/user/homeinsert";
     }
 }

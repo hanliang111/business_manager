@@ -23,13 +23,13 @@ public class CategoryController {
         List<Integer> integerList=categoryService.findParentId();
         session.setAttribute("categorylist",categoryList);
         session.setAttribute("integerList",integerList);
-        return "categorylist";
+        return "/category/categorylist";
     }
     @RequestMapping(value = "update/{id}",method = RequestMethod.GET)
     public  String  update(@PathVariable("id") Integer categoryId, HttpServletRequest request){
         Category category=categoryService.findCategoryById(categoryId);
         request.setAttribute("category",category);
-        return "categoryupdate";
+        return "/category/categoryupdate";
     }
 
     @RequestMapping(value = "update/{id}",method = RequestMethod.POST)
@@ -42,7 +42,7 @@ public class CategoryController {
            //修改成功
            return "redirect:/user/category/find";
        }
-        return "categoryupdate";
+        return "/category/categoryupdate";
     }
 
     @RequestMapping(value = "delete/{id}",method = RequestMethod.GET)
@@ -54,7 +54,7 @@ public class CategoryController {
 
     @RequestMapping(value = "insert",method = RequestMethod.GET)
     public String insert(){
-        return "categoryinsert";
+        return "/category/categoryinsert";
     }
 
     @RequestMapping(value = "insert",method = RequestMethod.POST)
@@ -66,7 +66,7 @@ public class CategoryController {
             //修改成功
             return "redirect:/user/category/find";
         }
-        return "categoryinsert";
+        return "/category/categoryinsert";
     }
 
 }

@@ -31,7 +31,7 @@ public class AuthorityInterceptor implements HandlerInterceptor {
         HttpSession session=request.getSession();
 
         UserInfo userInfo= (UserInfo) session.getAttribute(Consts.CURRENT_USER);
-        String usernamwcookie=null;
+        String usernamecookie=null;
         String passwordcookie=null;
         if (userInfo!=null){
             return true;
@@ -40,15 +40,15 @@ public class AuthorityInterceptor implements HandlerInterceptor {
             if (cookies != null) {
                 for (Cookie c : cookies) {
                     if (c.getName().equals("username")){
-                        usernamwcookie=c.getValue();
+                        usernamecookie=c.getValue();
                     }
                     if(c.getName().equals("password")){
                         passwordcookie=c.getValue();
                     }
                 }
             }
-            if (usernamwcookie!=null&&passwordcookie!=null){
-                UserInfo userInfo1=userService.login(usernamwcookie,passwordcookie);
+            if (usernamecookie!=null&&passwordcookie!=null){
+                UserInfo userInfo1=userService.login(usernamecookie,passwordcookie);
                 session.setAttribute(Consts.CURRENT_USER,userInfo1);
             }
             UserInfo userInfo1= (UserInfo) session.getAttribute(Consts.CURRENT_USER);
